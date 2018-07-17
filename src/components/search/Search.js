@@ -1,5 +1,4 @@
 import React from "react";
-import sdk from "flick-radar-sdk";
 
 // ================================
 
@@ -10,14 +9,6 @@ class Search extends React.Component {
       query: ""
     };
   }
-
-  searchDirectors = async event => {
-    const result = await sdk.searchDirectors({
-      query: this.state.query
-    });
-
-    console.log("result :", result);
-  };
 
   handleChange = event => {
     this.setState({
@@ -33,7 +24,15 @@ class Search extends React.Component {
           value={this.state.query}
           onChange={this.handleChange}
         />
-        <button type="submit" onClick={this.searchDirectors}>
+        <button
+          type="submit"
+          onClick={event =>
+            this.props.onSearchDirectors({
+              event,
+              query: this.state.query
+            })
+          }
+        >
           Search
         </button>
       </div>
