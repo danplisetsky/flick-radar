@@ -64,7 +64,7 @@ class SignUp extends React.Component {
             placeholder="confirm password"
             required
           />
-          <input type="submit" />
+          <input type="submit" value="Sign Up" />
         </div>
       </form>
     );
