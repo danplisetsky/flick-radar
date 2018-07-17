@@ -1,6 +1,7 @@
 import React from "react";
 import Search from "./search/Search";
 import SignUp from "./signup/SignUp";
+import LogIn from "./login/LogIn";
 
 // ================================
 
@@ -10,7 +11,7 @@ class MainPage extends React.Component {
       <div>
         <Search />
         <SignUp />
-        {/* <LogIn /> */}
+        <LogIn />
       </div>
     );
   }
