@@ -22,7 +22,11 @@ class Movie extends React.Component {
       <div
         style={{
           marginRight: "20px",
-          backgroundColor: movie.watched ? "green" : "red"
+          backgroundColor: movie.hasOwnProperty("watched")
+            ? movie.watched
+              ? "green"
+              : "red"
+            : "white"
         }}
       >
         {image}
