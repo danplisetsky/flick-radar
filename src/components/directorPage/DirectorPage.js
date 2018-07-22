@@ -20,8 +20,6 @@ class DirectorPage extends React.Component {
       undefined
     );
 
-    console.log("director.movies :", director.movies);
-
     return (
       <div>
         <div
