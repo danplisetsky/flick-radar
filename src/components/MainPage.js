@@ -6,6 +6,7 @@ import SignUp from "./signup/SignUp";
 import LogIn from "./login/LogIn";
 import SearchResults from "./searchResults/SearchResults";
 import DirectorPage from "./directorPage/DirectorPage";
+import LoggedInPage from "./loggedInPage/LoggedInPage";
 
 // ================================
 
@@ -20,6 +21,9 @@ class MainPage extends React.Component {
         image: "",
         name: "",
         movies: []
+      },
+      user: {
+        id: ""
       }
     };
   }
@@ -50,6 +54,15 @@ class MainPage extends React.Component {
     });
   };
 
+  handleLogin = userId => {
+    this.setState({
+      show: "loggedInPage",
+      user: {
+        id: userId
+      }
+    });
+  };
+
   render() {
     const showMainElement = () => {
       switch (this.state.show) {
@@ -57,7 +70,7 @@ class MainPage extends React.Component {
           return (
             <div>
               <SignUp />
-              <LogIn />
+              <LogIn onLogin={this.handleLogin} />
             </div>
           );
         case "searchResults":
@@ -65,10 +78,13 @@ class MainPage extends React.Component {
             <SearchResults
               directors={this.state.foundDirectors}
               onShowDirectorPage={this.handleShowDirectorPage}
+              userId={this.state.user.id}
             />
           );
         case "directorPage":
           return <DirectorPage director={this.state.director} />;
+        case "loggedInPage":
+          return <LoggedInPage userId={this.state.user.id} />;
         default:
           break;
       }

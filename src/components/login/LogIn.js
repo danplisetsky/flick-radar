@@ -28,12 +28,12 @@ class LogIn extends React.Component {
         }}
         onSubmit={async event => {
           event.preventDefault();
-          const result = await sdk.login({
+          const userId = await sdk.login({
             loginOrEmail: this.state.loginOrEmail,
             password: this.state.password
           });
 
-          console.log("result :", result);
+          this.props.onLogin(userId);
         }}
       >
         <div
