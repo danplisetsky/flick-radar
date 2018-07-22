@@ -23,7 +23,8 @@ class MainPage extends React.Component {
         movies: []
       },
       user: {
-        id: ""
+        id: "",
+        favoriteDirectors: []
       }
     };
   }
@@ -37,14 +38,19 @@ class MainPage extends React.Component {
       show: "searchResults",
       foundDirectors: result
     });
-
-    console.log("result :", result);
   };
 
   handleShowDirectorPage = async ({ event, director }) => {
-    const movies = await sdk.getMoviesByDirector({
-      directorId: director.id
-    });
+    const movies =
+      this.state.user.id &&
+      this.state.user.favoriteDirectors.find(d => d.id === director.id)
+        ? await sdk.getFavoriteDirectorMovies({
+            userId: this.state.user.id,
+            directorId: director.id
+          })
+        : await sdk.getMoviesByDirector({
+            directorId: director.id
+          });
 
     this.setState({
       show: "directorPage",
@@ -54,11 +60,14 @@ class MainPage extends React.Component {
     });
   };
 
-  handleLogin = userId => {
+  handleLogin = async userId => {
+    const favoriteDirectors = await sdk.getFavoriteDirectors(userId);
+
     this.setState({
       show: "loggedInPage",
       user: {
-        id: userId
+        id: userId,
+        favoriteDirectors
       }
     });
   };
@@ -84,7 +93,13 @@ class MainPage extends React.Component {
         case "directorPage":
           return <DirectorPage director={this.state.director} />;
         case "loggedInPage":
-          return <LoggedInPage userId={this.state.user.id} />;
+          return (
+            <LoggedInPage
+              userId={this.state.user.id}
+              directors={this.state.user.favoriteDirectors}
+              onShowDirectorPage={this.handleShowDirectorPage}
+            />
+          );
         default:
           break;
       }

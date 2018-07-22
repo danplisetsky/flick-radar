@@ -4,7 +4,22 @@ import React from "react";
 
 class LoggedInPage extends React.Component {
   render() {
-    return <div>the current user's id is {this.props.userId}</div>;
+    const directors = this.props.directors.map(director => {
+      return (
+        <li
+          key={director.id}
+          onClick={async event =>
+            await this.props.onShowDirectorPage({
+              director
+            })
+          }
+        >
+          {director.name}
+        </li>
+      );
+    });
+
+    return <ul>{directors}</ul>;
   }
 }
 

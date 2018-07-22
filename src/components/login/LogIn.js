@@ -33,7 +33,7 @@ class LogIn extends React.Component {
             password: this.state.password
           });
 
-          this.props.onLogin(userId);
+          await this.props.onLogin(userId);
         }}
       >
         <div
