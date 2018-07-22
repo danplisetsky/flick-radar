@@ -21,7 +21,8 @@ class Movie extends React.Component {
     return (
       <div
         style={{
-          marginRight: "20px"
+          marginRight: "20px",
+          backgroundColor: movie.watched ? "green" : "red"
         }}
       >
         {image}
