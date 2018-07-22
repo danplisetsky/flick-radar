@@ -11,6 +11,16 @@ class SearchResults extends React.Component {
       return (
         <li
           key={id}
+          onClick={async event =>
+            await this.props.onShowDirectorPage({
+              event,
+              director: {
+                id,
+                image,
+                name
+              }
+            })
+          }
           style={{
             display: "flex",
             flexDirection: "row"

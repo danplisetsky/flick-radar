@@ -5,6 +5,7 @@ import Search from "./search/Search";
 import SignUp from "./signup/SignUp";
 import LogIn from "./login/LogIn";
 import SearchResults from "./searchResults/SearchResults";
+import DirectorPage from "./directorPage/DirectorPage";
 
 // ================================
 
@@ -13,7 +14,13 @@ class MainPage extends React.Component {
     super(props);
     this.state = {
       show: "welcome",
-      foundDirectors: []
+      foundDirectors: [],
+      director: {
+        id: "",
+        image: "",
+        name: "",
+        movies: []
+      }
     };
   }
 
@@ -28,7 +35,19 @@ class MainPage extends React.Component {
     });
 
     console.log("result :", result);
+  };
 
+  handleShowDirectorPage = async ({ event, director }) => {
+    const movies = await sdk.getMoviesByDirector({
+      directorId: director.id
+    });
+
+    this.setState({
+      show: "directorPage",
+      director: Object.assign({}, director, {
+        movies
+      })
+    });
   };
 
   render() {
@@ -42,7 +61,14 @@ class MainPage extends React.Component {
             </div>
           );
         case "searchResults":
-          return <SearchResults directors={this.state.foundDirectors} />;
+          return (
+            <SearchResults
+              directors={this.state.foundDirectors}
+              onShowDirectorPage={this.handleShowDirectorPage}
+            />
+          );
+        case "directorPage":
+          return <DirectorPage director={this.state.director} />;
         default:
           break;
       }
