@@ -43,7 +43,9 @@ class MainPage extends React.Component {
   handleShowDirectorPage = async ({ event, director }) => {
     const movies =
       this.state.user.id &&
-      this.state.user.favoriteDirectors.find(d => d.id === director.id)
+      this.state.user.favoriteDirectors.find(
+        d => d.id === director.id.toString()
+      )
         ? await sdk.getFavoriteDirectorMovies({
             userId: this.state.user.id,
             directorId: director.id
