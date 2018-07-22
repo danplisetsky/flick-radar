@@ -26,8 +26,8 @@ class Search extends React.Component {
         />
         <button
           type="submit"
-          onClick={event =>
-            this.props.onSearchDirectors({
+          onClick={async event =>
+            await this.props.onSearchDirectors({
               event,
               query: this.state.query
             })
