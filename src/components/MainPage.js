@@ -22,10 +22,8 @@ class MainPage extends React.Component {
         name: "",
         movies: []
       },
-      user: {
-        id: "",
-        favoriteDirectors: []
-      }
+      userId: "",
+      userFavoriteDirectors: []
     };
   }
 
@@ -42,12 +40,12 @@ class MainPage extends React.Component {
 
   handleShowDirectorPage = async ({ event, director }) => {
     const movies =
-      this.state.user.id &&
-      this.state.user.favoriteDirectors.find(
-        d => d.id === director.id.toString()
+      this.state.userId &&
+      this.state.userFavoriteDirectors.find(
+        d => d.id.toString() === director.id.toString()
       )
         ? await sdk.getFavoriteDirectorMovies({
-            userId: this.state.user.id,
+            userId: this.state.userId,
             directorId: director.id
           })
         : await sdk.getMoviesByDirector({
@@ -62,15 +60,26 @@ class MainPage extends React.Component {
     });
   };
 
+  handleAddToFavorites = async director => {
+    await sdk.addDirectorToFavorites({
+      userId: this.state.userId,
+      directorId: director.id,
+      directorName: director.name,
+      directorImage: director.image
+    });
+
+    this.setState({
+      userFavoriteDirectors: [...this.state.userFavoriteDirectors, director]
+    });
+  };
+
   handleLogin = async userId => {
     const favoriteDirectors = await sdk.getFavoriteDirectors(userId);
 
     this.setState({
       show: "loggedInPage",
-      user: {
-        id: userId,
-        favoriteDirectors
-      }
+      userId,
+      userFavoriteDirectors: favoriteDirectors
     });
   };
 
@@ -89,21 +98,22 @@ class MainPage extends React.Component {
             <SearchResults
               directors={this.state.foundDirectors}
               onShowDirectorPage={this.handleShowDirectorPage}
-              userId={this.state.user.id}
+              userId={this.state.userId}
+              onAddToFavorites={this.handleAddToFavorites}
             />
           );
         case "directorPage":
           return (
             <DirectorPage
               director={this.state.director}
-              userId={this.state.user.id}
+              userId={this.state.userId}
             />
           );
         case "loggedInPage":
           return (
             <LoggedInPage
-              userId={this.state.user.id}
-              directors={this.state.user.favoriteDirectors}
+              userId={this.state.userId}
+              directors={this.state.userFavoriteDirectors}
               onShowDirectorPage={this.handleShowDirectorPage}
             />
           );
