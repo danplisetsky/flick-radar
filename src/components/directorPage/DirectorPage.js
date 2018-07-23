@@ -20,8 +20,6 @@ class DirectorPage extends React.Component {
       undefined
     );
 
-    // console.log("director.movies :", director.movies);
-
     return (
       <div>
         <div
@@ -33,7 +31,11 @@ class DirectorPage extends React.Component {
           {image}
           <p>{director.name}</p>
         </div>
-        <Movies movies={director.movies} />
+        <Movies
+          movies={director.movies}
+          director={director}
+          userId={this.props.userId}
+        />
         {/* <DirectorInfo />
         <AllMovies /> */}
       </div>

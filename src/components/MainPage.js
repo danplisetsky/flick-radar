@@ -93,7 +93,12 @@ class MainPage extends React.Component {
             />
           );
         case "directorPage":
-          return <DirectorPage director={this.state.director} />;
+          return (
+            <DirectorPage
+              director={this.state.director}
+              userId={this.state.user.id}
+            />
+          );
         case "loggedInPage":
           return (
             <LoggedInPage

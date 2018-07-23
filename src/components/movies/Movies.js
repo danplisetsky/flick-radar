@@ -7,7 +7,12 @@ import Movie from "./Movie";
 class Movies extends React.Component {
   render() {
     const movies = sortByReleaseDate(this.props.movies).map(movie => (
-      <Movie key={movie.id} movie={movie} />
+      <Movie
+        key={movie.id}
+        movie={movie}
+        directorId={this.props.director.id}
+        userId={this.props.userId}
+      />
     ));
 
     return (
