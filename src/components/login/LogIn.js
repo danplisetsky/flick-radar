@@ -45,6 +45,7 @@ class LogIn extends React.Component {
           <input
             type="text"
             placeholder="login or email"
+            autoComplete="username"
             required
             onChange={event =>
               this.handleChange({ event, field: "loginOrEmail" })
@@ -53,6 +54,7 @@ class LogIn extends React.Component {
           <input
             type="password"
             placeholder="password"
+            autoComplete="current-password"
             required
             onChange={event => this.handleChange({ event, field: "password" })}
           />
