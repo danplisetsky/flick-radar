@@ -73,6 +73,19 @@ class MainPage extends React.Component {
     });
   };
 
+  handleRemoveFromFavorites = async director => {
+    await sdk.removeFromFavorites({
+      userId: this.state.userId,
+      directorId: director.id
+    });
+
+    this.setState({
+      userFavoriteDirectors: this.state.userFavoriteDirectors.filter(
+        fd => fd.id !== director.id.toString()
+      )
+    });
+  };
+
   handleLogin = async userId => {
     const favoriteDirectors = await sdk.getFavoriteDirectors(userId);
 
@@ -100,6 +113,8 @@ class MainPage extends React.Component {
               onShowDirectorPage={this.handleShowDirectorPage}
               userId={this.state.userId}
               onAddToFavorites={this.handleAddToFavorites}
+              favoriteDirectors={this.state.userFavoriteDirectors}
+              onRemoveFromFavorites={this.handleRemoveFromFavorites}
             />
           );
         case "directorPage":
