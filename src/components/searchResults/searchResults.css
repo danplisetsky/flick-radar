@@ -1,0 +1,13 @@
+.search-results {
+  width: 75%;
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px solid blue;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bad-response {
+  font-size: 2em;
+}

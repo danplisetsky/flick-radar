@@ -1,14 +1,27 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
+
+import "./search.css";
 
 // ================================
 
 class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: ""
-    };
+  state = {
+    query: "",
+    search: false
+  };
+
+  // ================================
+
+  componentDidUpdate() {
+    if (this.state.search)
+      this.setState({
+        search: false,
+        query: ""
+      });
   }
+
+  // ================================
 
   handleChange = event => {
     this.setState({
@@ -16,26 +29,41 @@ class Search extends React.Component {
     });
   };
 
+  handleSubmitForm = event => {
+    event.preventDefault();
+    this.setState({
+      search: true
+    });
+  };
+
+  // ================================
+
   render() {
+    if (this.state.search) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/search",
+            search: `?query=${this.state.query.trim()}`
+          }}
+        />
+      );
+    }
+
     return (
-      <div>
+      <form className="searchContainer" onSubmit={this.handleSubmitForm}>
         <input
+          className="search"
           type="search"
+          required
           value={this.state.query}
           onChange={this.handleChange}
+          placeholder="Director"
         />
-        <button
-          type="submit"
-          onClick={async event =>
-            await this.props.onSearchDirectors({
-              event,
-              query: this.state.query
-            })
-          }
-        >
+        <button className="search" type="submit">
           Search
         </button>
-      </div>
+      </form>
     );
   }
 }
