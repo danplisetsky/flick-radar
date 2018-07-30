@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import sdk from "flick-radar-sdk";
 
 import SignUp from "../signup/SignUp";
@@ -20,8 +21,7 @@ class Auth extends React.Component {
     password: "",
     confirmedPassword: "",
     errorSignUp: "",
-    submitting: false,
-    userId: undefined
+    submitting: false
   };
 
   _currentRequest = null;
@@ -68,9 +68,7 @@ class Auth extends React.Component {
             submitting: false
           });
           if (userId) {
-            this.setState({
-              userId
-            });
+            this.props.setUserId(userId);
           } else {
             if (errorCode === "u001") {
               const updateObject = duplicateFields.reduceRight(
@@ -112,9 +110,9 @@ class Auth extends React.Component {
         this.state.loginOrEmail + this.state.loginPassword
       ) {
         this.setState({
-          submitting: false,
-          userId
+          submitting: false
         });
+        this.props.setUserId(userId);
       }
     } catch (error) {
       this.setState({
@@ -172,6 +170,14 @@ class Auth extends React.Component {
         <div className="auth">
           <div className="animation-loading" />
         </div>
+      );
+    } else if (this.props.userId) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/loggedin"
+          }}
+        />
       );
     }
     return (
