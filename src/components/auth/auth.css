@@ -1,0 +1,38 @@
+.auth {
+  margin-top: 20px;
+  min-width: 30%;
+}
+
+.auth > *:first-child {
+  margin-bottom: 20px;
+}
+
+.auth fieldset {
+  display: flex;
+  flex-direction: column;
+  border-color: blue;
+}
+
+.auth fieldset > input {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  width: 100%;
+}
+
+.auth button {
+  font-weight: bold;
+  border: 1px solid blue;
+  border-radius: 4px;
+}
+
+.button-and-error {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-and-error > div {
+  max-width: 50%;
+  font-size: 0.9em;
+}

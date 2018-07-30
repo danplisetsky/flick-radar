@@ -1,71 +1,54 @@
 import React from "react";
-import sdk from "flick-radar-sdk";
+
+import "./signUp.css";
+
 // ================================
 
 class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: "",
-      email: "",
-      password: ""
-    };
-  }
-
-  handleChange = ({ event, field }) => {
-    this.setState({
-      [field]: event.target.value
-    });
-  };
-
   render() {
     return (
-      <form
-        action=""
-        method="post"
-        style={{
-          width: "200px"
-        }}
-        onSubmit={async event => {
-          event.preventDefault();
-          const result = await sdk.createUser({
-            login: this.state.login,
-            email: this.state.email,
-            password: this.state.password
-          });
-
-          console.log("result :", result);
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column" }}>
+      <form onSubmit={async event => await this.props.onSubmit(event)}>
+        <fieldset className="signup">
+          <legend>Sign Up</legend>
           <input
+            className={`${this.props.loginClass}`}
             type="text"
-            placeholder="login"
+            placeholder="Login"
+            autoComplete="username"
+            onChange={event => this.props.onChange(event, "login")}
+            value={this.props.login}
             required
-            onChange={event => this.handleChange({ event, field: "login" })}
           />
           <input
+            className={`${this.props.emailClass}`}
             type="email"
-            placeholder="email"
-            required
+            placeholder="Email"
             autoComplete="email"
-            onChange={event => this.handleChange({ event, field: "email" })}
+            onChange={event => this.props.onChange(event, "email")}
+            value={this.props.email}
+            required
           />
           <input
             type="password"
+            placeholder="Password"
             autoComplete="new-password"
-            placeholder="password"
+            onChange={event => this.props.onChange(event, "password")}
+            value={this.props.password}
             required
-            onChange={event => this.handleChange({ event, field: "password" })}
           />
           <input
             type="password"
+            placeholder="Confirm Password"
             autoComplete="new-password"
-            placeholder="confirm password"
+            onChange={event => this.props.onChange(event, "confirmedPassword")}
+            value={this.props.confirmedPassword}
             required
           />
-          <input type="submit" value="Sign Up" />
-        </div>
+          <div className="signup button-and-error">
+            <button type="submit">Sign Up</button>
+            <div className="signup-error">{this.props.error}</div>
+          </div>
+        </fieldset>
       </form>
     );
   }

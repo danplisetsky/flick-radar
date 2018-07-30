@@ -1,65 +1,33 @@
 import React from "react";
-import sdk from "flick-radar-sdk";
 
 // ================================
 
-class LogIn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loginOrEmail: "",
-      password: ""
-    };
-  }
-
-  handleChange = ({ event, field }) => {
-    this.setState({
-      [field]: event.target.value
-    });
-  };
-
+class Login extends React.Component {
   render() {
     return (
-      <form
-        action=""
-        method="get"
-        style={{
-          width: "200px"
-        }}
-        onSubmit={async event => {
-          event.preventDefault();
-          const userId = await sdk.login({
-            loginOrEmail: this.state.loginOrEmail,
-            password: this.state.password
-          });
-
-          await this.props.onLogin(userId);
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column"
-          }}
-        >
+      <form onSubmit={async event => await this.props.onSubmit(event)}>
+        <fieldset className="login">
+          <legend>Log In</legend>
           <input
             type="text"
-            placeholder="login or email"
-            autoComplete="username"
+            placeholder="Login or Email"
+            onChange={event => this.props.onChange(event, "loginOrEmail")}
+            value={this.props.loginOrEmail}
             required
-            onChange={event =>
-              this.handleChange({ event, field: "loginOrEmail" })
-            }
           />
           <input
             type="password"
-            placeholder="password"
+            placeholder="Password"
             autoComplete="current-password"
+            onChange={event => this.props.onChange(event, "loginPassword")}
+            value={this.props.password}
             required
-            onChange={event => this.handleChange({ event, field: "password" })}
           />
-          <input type="submit" value="Log In" />
-        </div>
+          <div className="login button-and-error">
+            <button type="submit">Log In</button>
+            <div className="login-error">{this.props.error}</div>
+          </div>
+        </fieldset>
       </form>
     );
   }
@@ -67,4 +35,4 @@ class LogIn extends React.Component {
 
 // ================================
 
-export default LogIn;
+export default Login;
