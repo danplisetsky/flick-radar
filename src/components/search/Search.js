@@ -42,6 +42,7 @@ class Search extends React.Component {
     if (this.state.search) {
       return (
         <Redirect
+          push
           to={{
             pathname: "/search",
             search: `?query=${this.state.query.trim()}`

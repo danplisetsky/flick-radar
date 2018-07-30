@@ -1,7 +1,7 @@
 import React from "react";
 import sdk from "flick-radar-sdk";
 
-import parseQuery from "./helpers/parseQuery";
+import parseQuery from "../helpers/parseQuery";
 
 import "./searchResults.css";
 import Directors from "../directors/Directors";
@@ -43,25 +43,25 @@ class SearchResult extends React.Component {
   // ================================
 
   static getDerivedStateFromProps(props, state) {
-    const parsedQuery = parseQuery(props.location.search);
-    return parsedQuery !== state.prevQuery
+    const { query } = parseQuery(props.location.search);
+    return query !== state.prevQuery
       ? {
           directors: undefined,
-          prevQuery: parsedQuery,
+          prevQuery: query,
           error: false
         }
       : null;
   }
 
   async componentDidMount() {
-    const parsedQuery = parseQuery(this.props.location.search);
-    await this._searchDirectorsAsync(parsedQuery);
+    const { query } = parseQuery(this.props.location.search);
+    await this._searchDirectorsAsync(query);
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (!this.state.directors && !this.state.error) {
-      const parsedQuery = parseQuery(this.props.location.search);
-      await this._searchDirectorsAsync(parsedQuery);
+      const { query } = parseQuery(this.props.location.search);
+      await this._searchDirectorsAsync(query);
     }
   }
 
@@ -94,7 +94,9 @@ class SearchResult extends React.Component {
       }
     };
 
-    return <div className="search-results">{whatToRender()}</div>;
+    return (
+      <div className="container-results search-results">{whatToRender()}</div>
+    );
   }
 }
 

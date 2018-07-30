@@ -5,3 +5,11 @@ p {
   font-family: sans-serif;
   font-size: 14px;
 }
+
+.container-results {
+  width: 75%;
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px solid blue;
+  border-radius: 4px;
+}

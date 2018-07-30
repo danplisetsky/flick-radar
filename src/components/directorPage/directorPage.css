@@ -1,0 +1,11 @@
+.container-director {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.horizontal-rule {
+  width: 100%;
+  margin: 10px auto;
+  border-top: 2px solid lightblue;
+}

@@ -2,7 +2,7 @@ import queryString from "query-string";
 
 // ================================
 
-const parseQuery = query => queryString.parse(query).query;
+const parseQuery = query => queryString.parse(query);
 
 // ================================
 

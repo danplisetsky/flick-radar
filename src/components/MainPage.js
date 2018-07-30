@@ -6,6 +6,7 @@ import "./mainPage.css";
 import Search from "./search/Search";
 import SearchResults from "./searchResults/SearchResults";
 import Auth from "./auth/Auth";
+import DirectorPage from "./directorPage/DirectorPage";
 
 // ================================
 
@@ -21,6 +22,7 @@ class MainPage extends React.Component {
           <Switch>
             <Route exact path="/" component={Auth} />
             <Route path="/search" component={SearchResults} />
+            <Route path="/director" component={DirectorPage} />
           </Switch>
         </div>
       </Router>

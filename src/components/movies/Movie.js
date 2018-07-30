@@ -2,6 +2,7 @@ import React from "react";
 
 import sdk from "flick-radar-sdk";
 
+import "./movie.css";
 // ================================
 
 class Movie extends React.Component {
@@ -34,21 +35,19 @@ class Movie extends React.Component {
     const movie = this.props.movie;
 
     const image = movie.image ? (
-      <img
-        src={movie.image}
-        alt={movie.name}
-        style={{
-          width: "100px",
-          height: "100px"
-        }}
-      />
+      <img src={movie.image} alt={movie.name} />
     ) : (
-      undefined
+      <div className="no-image-movie" />
     );
+
+    const releaseDate = movie.releaseDate
+      ? movie.releaseDate.substr(0, 4)
+      : "?";
 
     return (
       <div
-        style={{
+        className="movie"
+        /* style={{
           marginRight: "20px",
           backgroundColor: this.state.watched
             ? this.state.watched.isWatched
@@ -56,12 +55,19 @@ class Movie extends React.Component {
               : "red"
             : "white"
         }}
-        onClick={this.state.watched ? this.handleClick : undefined}
+        onClick={this.state.watched ? this.handleClick : undefined} */
       >
-        {image}
-        <p>{movie.title}</p>
-        <p>{movie.releaseDate}</p>
-        {/* <p>{movie.overview}</p> */}
+        <div className="movie-info">
+          {image}
+          <div className="title-and-overview">
+            <p>{movie.title}</p>
+            <p>{movie.overview}</p>
+          </div>
+
+          <p>{releaseDate}</p>
+        </div>
+
+        <div className="watched-icon" />
       </div>
     );
   }
