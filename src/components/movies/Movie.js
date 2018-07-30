@@ -40,9 +40,7 @@ class Movie extends React.Component {
       <div className="no-image-movie" />
     );
 
-    const releaseDate = movie.releaseDate
-      ? movie.releaseDate.substr(0, 4)
-      : "?";
+    const releaseDate = movie.releaseDate || "?";
 
     return (
       <div
