@@ -1,10 +1,14 @@
 import React from "react";
 import sdk from "flick-radar-sdk";
 
+import UserContext from "../contexts/UserContext";
+import FavoriteDirectorsContext from "../contexts/FavoriteDirectorsContext";
+
+import Directors from "../directors/Directors";
+
 import parseQuery from "../helpers/parseQuery";
 
 import "./searchResults.css";
-import Directors from "../directors/Directors";
 
 // ================================
 
@@ -90,7 +94,24 @@ class SearchResult extends React.Component {
             </div>
           );
         default:
-          return <Directors directors={directors} />;
+          return (
+            <UserContext.Consumer>
+              {userId => (
+                <FavoriteDirectorsContext.Consumer>
+                  {favoriteDirectorsCtx => (
+                    <Directors
+                      directors={directors}
+                      userId={userId}
+                      favoriteDirectors={favoriteDirectorsCtx.favoriteDirectors}
+                      setFavoriteDirectors={
+                        favoriteDirectorsCtx.setFavoriteDirectors
+                      }
+                    />
+                  )}
+                </FavoriteDirectorsContext.Consumer>
+              )}
+            </UserContext.Consumer>
+          );
       }
     };
 

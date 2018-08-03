@@ -1,9 +1,13 @@
 import React from "react";
 import sortByReleaseDate from "./helpers/sortByReleaseDate";
 
+import UserContext from "../contexts/UserContext";
+import MovieContext from "../contexts/MovieContext";
+
 import Movie from "./Movie";
 
 import "./movies.css";
+
 // ================================
 
 class Movies extends React.Component {
@@ -16,12 +20,20 @@ class Movies extends React.Component {
       );
     }
     const movies = sortByReleaseDate(this.props.movies).map(movie => (
-      <Movie
-        key={movie.id}
-        movie={movie}
-        directorId={this.props.directorId}
-        userId={this.props.userId}
-      />
+      <UserContext.Consumer key={movie.id}>
+        {userId => (
+          <MovieContext.Consumer>
+            {movieCtx => (
+              <Movie
+                movie={movie}
+                userId={userId}
+                director={movieCtx.director}
+                toggleMovieWatchedStatus={movieCtx.toggleMovieWatchedStatus}
+              />
+            )}
+          </MovieContext.Consumer>
+        )}
+      </UserContext.Consumer>
     ));
 
     return <div className="movies">{movies}</div>;

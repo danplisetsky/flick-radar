@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import sdk from "flick-radar-sdk";
 
 import "./directors.css";
 
@@ -8,7 +9,8 @@ import "./directors.css";
 class Directors extends React.Component {
   state = {
     showDirectorPage: false,
-    directorId: undefined
+    directorId: undefined,
+    waiting: false
   };
 
   // ================================
@@ -31,9 +33,58 @@ class Directors extends React.Component {
     });
   };
 
+  handleAddToFavorites = async ({
+    directorId,
+    directorName,
+    directorImage,
+    userId
+  }) => {
+    this.setState({
+      waiting: true
+    });
+    try {
+      const director = await sdk.addDirectorToFavorites({
+        directorId,
+        directorName,
+        directorImage,
+        userId
+      });
+      this.props.setFavoriteDirectors([
+        ...this.props.favoriteDirectors,
+        director
+      ]);
+      this.setState({
+        waiting: false
+      });
+    } catch (error) {
+      console.log("error in Directors: ", error);
+      this.setState({
+        waiting: false
+      });
+    }
+  };
+
+  handleRemoveFromFavorites = async ({ directorId, userId }) => {
+    try {
+      this.props.setFavoriteDirectors(
+        this.props.favoriteDirectors.filter(({ id }) => id !== directorId)
+      );
+      await sdk.removeFromFavorites({
+        directorId,
+        userId
+      });
+    } catch (error) {
+      console.log("error in Directors: ", error);
+    }
+  };
+
   // ================================
 
   render() {
+    const userId = this.props.userId;
+    const directors = this.props.directors;
+    const favoriteDirectors = this.props.favoriteDirectors;
+
     if (this.state.showDirectorPage) {
       return (
         <Redirect
@@ -46,7 +97,7 @@ class Directors extends React.Component {
       );
     }
 
-    const directors = this.props.directors.map(director => {
+    const directorsToRender = directors.map(director => {
       const img = director.image ? (
         <img
           className="image-director"
@@ -55,6 +106,49 @@ class Directors extends React.Component {
         />
       ) : (
         <div className="no-image-director" />
+      );
+
+      const unwatchedMovies =
+        userId && favoriteDirectors.find(({ id }) => director.id === id) ? (
+          <div className="movies-to-watch">
+            {
+              favoriteDirectors
+                .find(({ id }) => director.id === id)
+                .movies.filter(movie => !movie.watched).length
+            }
+          </div>
+        ) : (
+          undefined
+        );
+
+      const favoriteIcon = userId ? (
+        favoriteDirectors.find(({ id }) => director.id === id) ? (
+          <div
+            className="remove-from-favorites"
+            onClick={async _ =>
+              await this.handleRemoveFromFavorites({
+                directorId: director.id,
+                userId
+              })
+            }
+          />
+        ) : (
+          <div
+            className={`add-to-favorites ${
+              this.state.waiting ? "waiting" : ""
+            }`}
+            onClick={async _ =>
+              await this.handleAddToFavorites({
+                directorId: director.id,
+                directorImage: director.image,
+                directorName: director.name,
+                userId
+              })
+            }
+          />
+        )
+      ) : (
+        undefined
       );
 
       return (
@@ -66,11 +160,13 @@ class Directors extends React.Component {
             {img}
             <p className="director-name">{director.name}</p>
           </div>
+          {unwatchedMovies}
+          {favoriteIcon}
         </li>
       );
     });
 
-    return <div className="directors">{directors}</div>;
+    return <div className="directors">{directorsToRender}</div>;
   }
 }
 

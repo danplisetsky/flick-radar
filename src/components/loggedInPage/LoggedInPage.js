@@ -1,25 +1,62 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
+import sdk from "flick-radar-sdk";
+
+import Directors from "../directors/Directors";
 
 // ================================
 
 class LoggedInPage extends React.Component {
-  render() {
-    const directors = this.props.directors.map(director => {
-      return (
-        <li
-          key={director.id}
-          onClick={async event =>
-            await this.props.onShowDirectorPage({
-              director
-            })
-          }
-        >
-          {director.name}
-        </li>
+  async componentDidMount() {
+    try {
+      const favoriteDirectors = await sdk.getFavoriteDirectors(
+        this.props.userId
       );
-    });
+      this.props.setFavoriteDirectors(favoriteDirectors);
+    } catch (error) {
+      console.log("error in LoggedInPage: ", error);
+    }
+  }
 
-    return <ul>{directors}</ul>;
+  // ================================
+
+  render() {
+    const userId = this.props.userId;
+    const favoriteDirectors = this.props.favoriteDirectors;
+
+    if (!userId) {
+      return <Redirect to="/" />;
+    }
+
+    const whatToRender = () => {
+      switch (true) {
+        case !favoriteDirectors:
+          return <div className="animation-loading" />;
+        case favoriteDirectors.length === 0:
+          return (
+            <div className="result">
+              Looks like you haven't added a single director to your favorites.
+              Do it now by searching for one!
+            </div>
+          );
+        default:
+          return (
+            <Directors
+              userId={userId}
+              directors={favoriteDirectors}
+              favoriteDirectors={favoriteDirectors}
+              setFavoriteDirectors={this.props.setFavoriteDirectors}
+            />
+          );
+      }
+    };
+
+    return (
+      <fieldset className="favorite-directors container-results">
+        <legend>Favorite Directors</legend>
+        {whatToRender()}
+      </fieldset>
+    );
   }
 }
 
