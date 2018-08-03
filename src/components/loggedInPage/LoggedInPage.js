@@ -9,10 +9,12 @@ import Directors from "../directors/Directors";
 class LoggedInPage extends React.Component {
   async componentDidMount() {
     try {
-      const favoriteDirectors = await sdk.getFavoriteDirectors(
-        this.props.userId
-      );
-      this.props.setFavoriteDirectors(favoriteDirectors);
+      if (this.props.userId) {
+        const favoriteDirectors = await sdk.getFavoriteDirectors(
+          this.props.userId
+        );
+        this.props.setFavoriteDirectors(favoriteDirectors);
+      }
     } catch (error) {
       console.log("error in LoggedInPage: ", error);
     }
