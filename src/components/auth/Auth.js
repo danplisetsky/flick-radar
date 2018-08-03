@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import sdk from "flick-radar-sdk";
 
 import SignUp from "../signup/SignUp";
-import Login from "../login/Login";
+import Login from "../login/LogIn";
 
 import "./auth.css";
 
