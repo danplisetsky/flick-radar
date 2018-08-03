@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 
 import UserContext from "./contexts/UserContext";
 import FavoriteDirectorsContext from "./contexts/FavoriteDirectorsContext";
@@ -21,14 +26,16 @@ import "./mainPage.css";
 class MainPage extends React.Component {
   state = {
     userId: undefined,
+    userLogin: undefined,
     favoriteDirectors: undefined
   };
 
   // ================================
 
-  setUserId = userId => {
+  setUserIdAndLogin = ({ userId, userLogin }) => {
     this.setState({
-      userId
+      userId,
+      userLogin
     });
   };
 
@@ -56,8 +63,26 @@ class MainPage extends React.Component {
 
   // ================================
 
+  static getDerivedStateFromProps(props, state) {
+    return !state.userId
+      ? {
+          userLogin: undefined,
+          favoriteDirectors: undefined
+        }
+      : null;
+  }
+
+  // ================================
+
   render() {
-    const userMenu = this.state.userId ? <UserMenu /> : undefined;
+    const userMenu = this.state.userId ? (
+      <UserMenu
+        login={this.state.userLogin}
+        setUserIdAndLogin={this.setUserIdAndLogin}
+      />
+    ) : (
+      undefined
+    );
 
     return (
       <Router>
@@ -74,7 +99,7 @@ class MainPage extends React.Component {
               render={props => (
                 <Auth
                   {...props}
-                  setUserId={this.setUserId}
+                  setUserIdAndLogin={this.setUserIdAndLogin}
                   userId={this.state.userId}
                 />
               )}
@@ -120,7 +145,6 @@ class MainPage extends React.Component {
             />
             <Route
               path="/loggedin"
-              exact
               render={props => (
                 <LoggedInPage
                   {...props}

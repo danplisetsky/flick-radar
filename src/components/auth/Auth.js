@@ -58,7 +58,7 @@ class Auth extends React.Component {
         submitting: true
       });
       try {
-        const { userId, errorCode, duplicateFields } = await sdk.createUser({
+        const { user, errorCode, duplicateFields } = await sdk.createUser({
           login: this.state.login,
           email: this.state.email,
           password: this.state.password
@@ -67,8 +67,11 @@ class Auth extends React.Component {
           this.setState({
             submitting: false
           });
-          if (userId) {
-            this.props.setUserId(userId);
+          if (user) {
+            this.props.setUserIdAndLogin({
+              userId: user.id,
+              userLogin: user.login
+            });
           } else {
             if (errorCode === "u001") {
               const updateObject = duplicateFields.reduceRight(
@@ -101,7 +104,7 @@ class Auth extends React.Component {
     });
     this._currentRequest = this.state.loginOrEmail + this.state.loginPassword;
     try {
-      const userId = await sdk.login({
+      const { id: userId, login: userLogin } = await sdk.login({
         loginOrEmail: this.state.loginOrEmail,
         password: this.state.loginPassword
       });
@@ -112,7 +115,10 @@ class Auth extends React.Component {
         this.setState({
           submitting: false
         });
-        this.props.setUserId(userId);
+        this.props.setUserIdAndLogin({
+          userId,
+          userLogin
+        });
       }
     } catch (error) {
       this.setState({
