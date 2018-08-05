@@ -1,0 +1,32 @@
+.user-menu {
+  width: 100%;
+  background-color: blue;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+}
+
+.greeting {
+  grid-column: 1/2;
+  color: wheat;
+  justify-self: center;
+
+  font-size: 1.4em;
+}
+
+.home {
+  grid-column: 2/3;
+
+  font-family: "Fondamento", cursive;
+  font-size: 2.2em;
+  text-align: center;
+}
+
+.user-links {
+  grid-column: 3/4;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}

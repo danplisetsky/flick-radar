@@ -7,13 +7,16 @@ import "./movie.css";
 // ================================
 
 class Movie extends React.Component {
-  state = {
-    watched: this.props.director
+  constructor(props) {
+    super(props);
+    const currentMovie = this.props.director
       ? this.props.director.movies.find(({ id }) => id === this.props.movie.id)
-          .watched
-      : undefined,
-    waiting: false
-  };
+      : undefined;
+    this.state = {
+      watched:
+        this.props.director && currentMovie ? currentMovie.watched : undefined
+    };
+  }
 
   // ================================
 
@@ -43,10 +46,11 @@ class Movie extends React.Component {
   // ================================
 
   componentDidUpdate(prevProps, prevState) {
-    const newWatchedStatus = this.props.director
+    const currentMovie = this.props.director
       ? this.props.director.movies.find(({ id }) => id === this.props.movie.id)
-          .watched
       : undefined;
+    const newWatchedStatus =
+      this.props.director && currentMovie ? currentMovie.watched : undefined;
     if (prevState.watched !== newWatchedStatus) {
       this.setState({
         watched: newWatchedStatus
@@ -64,7 +68,7 @@ class Movie extends React.Component {
     const image = movie.image ? (
       <img src={movie.image} alt={movie.name} />
     ) : (
-      <div className="no-image-movie" />
+      <div className="no-image-movie icon background-icon" />
     );
 
     const releaseDate = movie.releaseDate || "?";
@@ -78,15 +82,17 @@ class Movie extends React.Component {
     };
 
     const toggleWatchedIcon =
-      userId && new Date(releaseDate) < Date.now() ? (
+      userId && director && new Date(releaseDate) < Date.now() ? (
         this.state.watched ? (
           <div
-            className={`toggle-watched ${this.state.waiting ? "waiting" : ""}`}
+            className={`toggle-watched icon background-icon ${
+              this.state.waiting ? "waiting" : ""
+            }`}
             onClick={onClickToggleWatched}
           />
         ) : (
           <div
-            className={`toggle-not-watched ${
+            className={`toggle-not-watched icon background-icon ${
               this.state.waiting ? "waiting" : ""
             }`}
             onClick={onClickToggleWatched}
@@ -105,7 +111,7 @@ class Movie extends React.Component {
             <p>{movie.overview}</p>
           </div>
 
-          <p>{releaseDate}</p>
+          <p className="release-date">{releaseDate}</p>
         </div>
 
         {toggleWatchedIcon}

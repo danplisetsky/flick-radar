@@ -100,17 +100,17 @@ class Directors extends React.Component {
     const directorsToRender = directors.map(director => {
       const img = director.image ? (
         <img
-          className="image-director"
+          className="image-director icon"
           src={director.image}
           alt={director.name}
         />
       ) : (
-        <div className="no-image-director" />
+        <div className="no-image-director icon background-icon" />
       );
 
       const unwatchedMovies =
         userId && favoriteDirectors.find(({ id }) => director.id === id) ? (
-          <div className="movies-to-watch">
+          <div className="movies-to-watch icon background-icon">
             {
               favoriteDirectors
                 .find(({ id }) => director.id === id)
@@ -124,7 +124,7 @@ class Directors extends React.Component {
       const favoriteIcon = userId ? (
         favoriteDirectors.find(({ id }) => director.id === id) ? (
           <div
-            className="remove-from-favorites"
+            className="remove-from-favorites icon background-icon"
             onClick={async _ =>
               await this.handleRemoveFromFavorites({
                 directorId: director.id,
@@ -134,7 +134,7 @@ class Directors extends React.Component {
           />
         ) : (
           <div
-            className={`add-to-favorites ${
+            className={`add-to-favorites icon background-icon ${
               this.state.waiting ? "waiting" : ""
             }`}
             onClick={async _ =>

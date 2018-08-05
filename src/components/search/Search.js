@@ -52,18 +52,16 @@ class Search extends React.Component {
     }
 
     return (
-      <form className="searchContainer" onSubmit={this.handleSubmitForm}>
+      <form className="search-container" onSubmit={this.handleSubmitForm}>
         <input
-          className="search"
+          className="thin-border"
           type="search"
           required
           value={this.state.query}
           onChange={this.handleChange}
           placeholder="Director"
         />
-        <button className="search" type="submit">
-          Search
-        </button>
+        <button type="submit">Search</button>
       </form>
     );
   }

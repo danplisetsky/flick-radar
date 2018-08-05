@@ -70,22 +70,13 @@ class MainPage extends React.Component {
   // ================================
 
   render() {
-    const userMenu = this.state.userId ? (
-      <UserMenu
-        login={this.state.userLogin}
-        setUserIdAndLogin={this.setUserIdAndLogin}
-      />
-    ) : (
-      undefined
-    );
-
     return (
       <Router>
         <div className="container">
-          <a href="/" className="home">
-            Flick Radar
-          </a>
-          {userMenu}
+          <UserMenu
+            login={this.state.userLogin}
+            setUserIdAndLogin={this.setUserIdAndLogin}
+          />
           <Route component={Search} />
           <Switch>
             <Route

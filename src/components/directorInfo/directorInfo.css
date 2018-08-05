@@ -28,6 +28,12 @@
   font-weight: bold;
 }
 
+@media screen and (max-width: 700px) {
+  .name-and-bio > p:last-of-type {
+    display: none;
+  }
+}
+
 .name-and-bio > p:last-of-type {
   flex-grow: 1;
   font-size: 0.8rem;

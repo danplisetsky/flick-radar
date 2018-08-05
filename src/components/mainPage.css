@@ -4,12 +4,53 @@
   align-items: center;
 }
 
-.home {
+.container > *:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.container-results {
+  width: 75%;
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px solid blue;
+  border-radius: 4px;
+}
+
+.thin-border {
+  border: 1px solid blue;
+  border-radius: 4px;
+}
+
+button {
+  font-weight: bold;
+  padding: 7px;
+  border: 1px solid blue;
+  border-radius: 25%;
+  color: blue;
+  cursor: pointer;
+}
+
+button:not(.no-hover):hover {
   background-color: blue;
-  width: 100%;
-  text-decoration: none;
   color: white;
-  font-family: "Fondamento", cursive;
-  font-size: 50px;
-  text-align: center;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: wheat;
+}
+
+.icon {
+  flex-basis: 45px;
+  flex-shrink: 0;
+}
+
+.background-icon {
+  height: 68px;
+  background-repeat: no-repeat;
+  background-size: 45px 68px;
 }

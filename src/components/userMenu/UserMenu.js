@@ -1,5 +1,7 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import "./userMenu.css";
 
 // ================================
 
@@ -16,10 +18,23 @@ class UserMenu extends React.Component {
     const login = this.props.login;
 
     return (
-      <div className="userMenu">
-        <p>Hi, {login}</p>
-        <NavLink to="/loggedin">Favorite Directors</NavLink>
-        <button onClick={this.handleClick}>Sign out</button>
+      <div className="user-menu">
+        {login ? <p className="greeting">Hi {login}</p> : undefined}
+        <a href="/" className="home">
+          Flick Radar
+        </a>
+        {login ? (
+          <div className="user-links">
+            <Link to="/loggedin" className="favorite-directors">
+              Favorite Directors
+            </Link>
+            <button className="sign-out no-hover" onClick={this.handleClick}>
+              Sign out
+            </button>
+          </div>
+        ) : (
+          undefined
+        )}
       </div>
     );
   }
