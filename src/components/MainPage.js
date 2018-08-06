@@ -71,7 +71,6 @@ class MainPage extends React.Component {
   // ================================
 
   render() {
-    console.log(process.env.PUBLIC_URL);
     return (
       <Router basename={process.env.PUBLIC_URL}>
         <div className="container">
