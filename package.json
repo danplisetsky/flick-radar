@@ -15,5 +15,6 @@
     "test-react": "react-scripts test --env=jsdom",
     "eject-react": "react-scripts eject",
     "start-react": "react-scripts start"
-  }
+  },
+  "homepage": "plisetsky.github.io/flick-radar"
 }
