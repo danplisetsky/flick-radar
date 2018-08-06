@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import sdk from "flick-radar-sdk";
+import DocumentTitle from "react-document-title";
 
 import Directors from "../directors/Directors";
 
@@ -25,6 +26,7 @@ class LoggedInPage extends React.Component {
   render() {
     const userId = this.props.userId;
     const favoriteDirectors = this.props.favoriteDirectors;
+    const userLogin = this.props.userLogin;
 
     if (!userId) {
       return <Redirect to="/" />;
@@ -54,10 +56,12 @@ class LoggedInPage extends React.Component {
     };
 
     return (
-      <fieldset className="favorite-directors container-results">
-        <legend>Favorite Directors</legend>
-        {whatToRender()}
-      </fieldset>
+      <DocumentTitle title={`${userLogin} - Flick Radar`}>
+        <fieldset className="favorite-directors container-results">
+          <legend>Favorite Directors</legend>
+          {whatToRender()}
+        </fieldset>
+      </DocumentTitle>
     );
   }
 }

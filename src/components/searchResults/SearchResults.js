@@ -1,5 +1,6 @@
 import React from "react";
 import sdk from "flick-radar-sdk";
+import DocumentTitle from "react-document-title";
 
 import UserContext from "../contexts/UserContext";
 import FavoriteDirectorsContext from "../contexts/FavoriteDirectorsContext";
@@ -116,7 +117,11 @@ class SearchResult extends React.Component {
     };
 
     return (
-      <div className="container-results search-results">{whatToRender()}</div>
+      <DocumentTitle
+        title={`${parseQuery(this.props.location.search).query} - Flick Radar`}
+      >
+        <div className="container-results search-results">{whatToRender()}</div>
+      </DocumentTitle>
     );
   }
 }

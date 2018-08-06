@@ -1,5 +1,6 @@
 import React from "react";
 import sdk from "flick-radar-sdk";
+import DocumentTitle from "react-document-title";
 
 import parseQuery from "../helpers/parseQuery";
 
@@ -83,8 +84,9 @@ class DirectorPage extends React.Component {
   // ================================
 
   render() {
+    const directorInfo = this.state.directorInfo;
+
     const whatToRender = () => {
-      const directorInfo = this.state.directorInfo;
       switch (true) {
         case this.state.error:
           return (
@@ -107,9 +109,15 @@ class DirectorPage extends React.Component {
     };
 
     return (
-      <div className="container-results container-director">
-        {whatToRender()}
-      </div>
+      <DocumentTitle
+        title={`${
+          directorInfo ? directorInfo.name : "Director Page"
+        } - Flick Radar`}
+      >
+        <div className="container-results container-director">
+          {whatToRender()}
+        </div>
+      </DocumentTitle>
     );
   }
 }

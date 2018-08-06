@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import DocumentTitle from "react-document-title";
 
 import UserContext from "./contexts/UserContext";
 import FavoriteDirectorsContext from "./contexts/FavoriteDirectorsContext";
@@ -83,11 +84,13 @@ class MainPage extends React.Component {
               exact
               path="/"
               render={props => (
-                <Auth
-                  {...props}
-                  setUserIdAndLogin={this.setUserIdAndLogin}
-                  userId={this.state.userId}
-                />
+                <DocumentTitle title="Flick Radar">
+                  <Auth
+                    {...props}
+                    setUserIdAndLogin={this.setUserIdAndLogin}
+                    userId={this.state.userId}
+                  />
+                </DocumentTitle>
               )}
             />
             <Route
@@ -135,6 +138,7 @@ class MainPage extends React.Component {
                 <LoggedInPage
                   {...props}
                   userId={this.state.userId}
+                  userLogin={this.state.userLogin}
                   favoriteDirectors={this.state.favoriteDirectors}
                   setFavoriteDirectors={this.setFavoriteDirectors}
                 />
