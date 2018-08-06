@@ -111,11 +111,12 @@ class Directors extends React.Component {
       const unwatchedMovies =
         userId && favoriteDirectors.find(({ id }) => director.id === id) ? (
           <div className="movies-to-watch icon background-icon">
-            {
-              favoriteDirectors
-                .find(({ id }) => director.id === id)
-                .movies.filter(movie => !movie.watched).length
-            }
+            {favoriteDirectors
+              .find(({ id }) => director.id === id)
+              .movies.filter(movie => !movie.watched).length +
+              " / " +
+              favoriteDirectors.find(({ id }) => director.id === id).movies
+                .length}
           </div>
         ) : (
           undefined
