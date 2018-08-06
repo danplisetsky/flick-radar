@@ -71,8 +71,9 @@ class MainPage extends React.Component {
   // ================================
 
   render() {
+    console.log(process.env.PUBLIC_URL);
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <div className="container">
           <UserMenu
             login={this.state.userLogin}

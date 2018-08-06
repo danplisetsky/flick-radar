@@ -14,7 +14,12 @@
     "build-react": "react-scripts build",
     "test-react": "react-scripts test --env=jsdom",
     "eject-react": "react-scripts eject",
-    "start-react": "react-scripts start"
+    "start-react": "react-scripts start",
+    "predeploy": "npm run build-react",
+    "deploy": "gh-pages -d build"
   },
-  "homepage": "plisetsky.github.io/flick-radar"
+  "homepage": "https://danplisetsky.github.io/flick-radar/",
+  "devDependencies": {
+    "gh-pages": "^1.2.0"
+  }
 }

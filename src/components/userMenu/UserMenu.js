@@ -20,7 +20,7 @@ class UserMenu extends React.Component {
     return (
       <div className="user-menu">
         {login ? <p className="greeting">Hi {login}</p> : undefined}
-        <a href="/" className="home">
+        <a href={process.env.PUBLIC_URL} className="home">
           Flick Radar
         </a>
         {login ? (
